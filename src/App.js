@@ -4,7 +4,7 @@ import Keyboard from './components/Keyboard';
 import { boardDefault, generateWordSet } from './Words';
 import { createContext, useState, useEffect } from 'react'; 
 import GameOver from './components/GameOver';
-
+import translateText from './translate-nodejs/main-node';
 
 export const AppContext = createContext();
 
@@ -20,6 +20,9 @@ function App() {
     guessedWord: false
   })
 
+  const [translationString, setTranslation] = useState("")
+
+
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
@@ -32,6 +35,11 @@ function App() {
     })
 
   }, [])
+
+  const tagalog = require('./translate-nodejs/main-node');
+  console.log(
+    `${tagalog.translateText()} `
+  );
 
   const onSelectLetter = (keyVal) => {
     //max letters in the wordle guess
@@ -108,7 +116,9 @@ function App() {
         setDisabledLetters,
         disabledLetters, 
         setGameOver,
-        gameOver
+        gameOver,
+        setTranslation,
+        translationString
         }}>
         <div className='game'>
           <Board />
