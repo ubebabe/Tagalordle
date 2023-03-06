@@ -4,7 +4,7 @@ import Keyboard from './components/Keyboard';
 import { boardDefault, generateWordSet } from './Words';
 import { createContext, useState, useEffect } from 'react'; 
 import GameOver from './components/GameOver';
-import translateText from './translate-nodejs/main-node';
+// import translateText from './translate-nodejs/main-node';
 
 export const AppContext = createContext();
 
@@ -20,12 +20,17 @@ function App() {
     guessedWord: false
   })
 
+  const [message, setMessage] = useState("");
+
   const [translationString, setTranslation] = useState("")
-
-
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
+  
+    //calling backend w fetch
+    fetch("http://localhost:8000/")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message));
 
     generateWordSet().then((words) => {
       setWordSet(words.wordSet);
@@ -36,10 +41,10 @@ function App() {
 
   }, [])
 
-  const tagalog = require('./translate-nodejs/main-node');
-  console.log(
-    `${tagalog.translateText()} `
-  );
+  // const tagalog = require('./translate-nodejs/main-node');
+  // console.log(
+  //   `${tagalog.translateText()} `
+  // );
 
   const onSelectLetter = (keyVal) => {
     //max letters in the wordle guess
@@ -100,7 +105,7 @@ function App() {
     <div className="App">
       <nav> 
         <h1>
-          {correctWord}
+          {message}
         </h1>
       </nav>
 

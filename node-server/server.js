@@ -14,7 +14,7 @@ app.use(express.json());
 
 //get route
 app.get("/", (req, res) => {
-    res.json({ message: "Hello from server!" });
+    res.json({ message: "urmom" });
 });
 
 app.listen(8000, () => {
