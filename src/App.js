@@ -5,6 +5,7 @@ import { boardDefault, generateWordSet } from './Words';
 import { createContext, useState, useEffect } from 'react'; 
 import GameOver from './components/GameOver';
 // import translateText from './translate-nodejs/main-node';
+import axios from 'axios';
 
 export const AppContext = createContext();
 
@@ -20,17 +21,29 @@ function App() {
     guessedWord: false
   })
 
-  const [message, setMessage] = useState("");
+  //translation variables recieved from backend (translation)
+  const [translation, setTranslation] = useState("");
 
-  const [translationString, setTranslation] = useState("")
+  //AXIOS - function to get translation from backend
+  const getTranslation = async () => {
+    axios.get('http://localhost:8000/')
+     .then((response) => setTranslation(response.data.translation));
+  };
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
   
-    //calling backend w fetch
-    fetch("http://localhost:8000/")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message));
+    //FETCH (not using) - calling backend
+    //  fetch("http://localhost:8000/")
+    //  .then((res) => res.json())
+    //  .then((data) => setTranslation(data.translation));
+
+    // AXIOS - GET request inside useEffect React hook
+    getTranslation();
+
+    //method get backend info
+     axios.get('http://localhost:8000/')
+     .then((response) => setTranslation(response.data.translation));
 
     generateWordSet().then((words) => {
       setWordSet(words.wordSet);
@@ -105,7 +118,7 @@ function App() {
     <div className="App">
       <nav> 
         <h1>
-          {message}
+          {translation}
         </h1>
       </nav>
 
@@ -123,7 +136,7 @@ function App() {
         setGameOver,
         gameOver,
         setTranslation,
-        translationString
+        translation
         }}>
         <div className='game'>
           <Board />

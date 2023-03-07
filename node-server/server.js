@@ -1,3 +1,4 @@
+//guide - https://codedamn.com/news/reactjs/how-to-connect-react-with-node-js
 //require() = built-in function to include external modules in 
 // Node.js application using which we are importing
 const express = require('express');
@@ -14,7 +15,7 @@ app.use(express.json());
 
 //get route
 app.get("/", (req, res) => {
-    res.json({ message: "urmom" });
+    res.json({ translation: "backend boi" });
 });
 
 app.listen(8000, () => {
