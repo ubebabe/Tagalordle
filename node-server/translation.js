@@ -33,6 +33,7 @@ async function translateText() {
 
 }
 
-translateText();
+//tagalag translation sent to server
+export const translation = translateText();
 
 exports.translateText = translateText;

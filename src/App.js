@@ -20,15 +20,8 @@ function App() {
     gameOver: false, 
     guessedWord: false
   })
-
   //translation variables recieved from backend (translation)
   const [translation, setTranslation] = useState("");
-
-  //AXIOS - function to get translation from backend
-  const getTranslation = async () => {
-    axios.get('http://localhost:8000/')
-     .then((response) => setTranslation(response.data.translation));
-  };
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
@@ -38,26 +31,44 @@ function App() {
     //  .then((res) => res.json())
     //  .then((data) => setTranslation(data.translation));
 
-    // AXIOS - GET request inside useEffect React hook
-    getTranslation();
-
-    //method get backend info
-     axios.get('http://localhost:8000/')
-     .then((response) => setTranslation(response.data.translation));
-
+     //set today's word from dataset
     generateWordSet().then((words) => {
       setWordSet(words.wordSet);
       setCorrectWord(words.todaysWord);
 
-      console.log(words.todaysWord);
+      //send today's word to backend
+      sendTodaysWord(words.todaysWord);
     })
+
+    //get today's word tagalog translation
+    getTranslation();
 
   }, [])
 
-  // const tagalog = require('./translate-nodejs/main-node');
-  // console.log(
-  //   `${tagalog.translateText()} `
-  // );
+  //FUNCTIONS TO SET TODAY'S WORD (FRONT/BACK END CONNECTION)
+
+  //SEND/POST today's word to backend to be translated
+  const sendTodaysWord = async (inputtedWord) => {
+
+    axios.post('http://localhost:8000/', 
+    {
+      englishWord: inputtedWord,
+      tagalogWord: ""
+    })
+    .then((response) => {
+      //this is not working lol
+      //console.log(`response from backend: ${JSON.parse(response)}`);
+    });
+
+
+  };
+
+  //GET translation from backend
+  const getTranslation = async () => {
+    axios.get('http://localhost:8000/')
+     .then((response) => setTranslation(response.data.translation));
+  };
+
 
   const onSelectLetter = (keyVal) => {
     //max letters in the wordle guess
@@ -92,8 +103,6 @@ function App() {
       currWord += board[currAttempt.attempt][i];
     }
 
-    console.log(currWord);
-
     if(wordSet.has(currWord.toLowerCase())){
 
       //if 5 letters then move to next attempt and restart letter pos
@@ -103,10 +112,14 @@ function App() {
       alert("Word Not Found");
     } 
 
-    if(currWord === correctWord){
+    if(currWord.toLowerCase() === correctWord){
       setGameOver({gameOver: true, guessedWord: true});
+      console.log("DONE SON");
       return;
     }
+
+    // console.log(`currWord:  ${currWord.toLowerCase()}`);
+    // console.log(`correctWord:  ${correctWord}`);
 
     if(currAttempt.attempt === 5){
       setGameOver({gameOver: true, guessedWord: false});
@@ -136,7 +149,7 @@ function App() {
         setGameOver,
         gameOver,
         setTranslation,
-        translation
+        translation,
         }}>
         <div className='game'>
           <Board />
