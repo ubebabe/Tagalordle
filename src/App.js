@@ -11,6 +11,7 @@ export const AppContext = createContext();
 
 function App() {
 
+  //be wary of useStates
   const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({attempt: 0, letterPos: 0})
   const [wordSet, setWordSet] = useState(new Set())
@@ -25,11 +26,6 @@ function App() {
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
-  
-    //FETCH (not using) - calling backend
-    //  fetch("http://localhost:8000/")
-    //  .then((res) => res.json())
-    //  .then((data) => setTranslation(data.translation));
 
      //set today's word from dataset
     generateWordSet().then((words) => {
@@ -37,36 +33,20 @@ function App() {
       setCorrectWord(words.todaysWord);
 
       //send today's word to backend
-      sendTodaysWord(words.todaysWord);
+      getTranslation(words.todaysWord);
     })
-
-    //get today's word tagalog translation
-    getTranslation();
 
   }, [])
 
   //FUNCTIONS TO SET TODAY'S WORD (FRONT/BACK END CONNECTION)
 
-  //SEND/POST today's word to backend to be translated
-  const sendTodaysWord = async (inputtedWord) => {
-
-    axios.post('http://localhost:8000/', 
-    {
-      englishWord: inputtedWord,
-      tagalogWord: ""
-    })
-    .then((response) => {
-      //this is not working lol
-      //console.log(`response from backend: ${JSON.parse(response)}`);
-    });
-
-
-  };
-
+  //query params
   //GET translation from backend
-  const getTranslation = async () => {
-    axios.get('http://localhost:8000/')
-     .then((response) => setTranslation(response.data.translation));
+  const getTranslation = async (inputtedWord) => {
+
+     //destructuring !!!!!
+     const {data} = await axios.get('http://localhost:8000/?englishWord=' + inputtedWord)
+     setTranslation(data.translation);
   };
 
 
@@ -90,7 +70,8 @@ function App() {
     //update new board
     setBoard(newBoard)
     //update attempt
-    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos-1})
+    //callback useState !!!!
+    setCurrAttempt(prev => ({...prev, letterPos: prev.letterPos-1}))
 
   }
 
@@ -98,15 +79,19 @@ function App() {
     //check if there's 5 letters
     if(currAttempt.letterPos !== 5) return;
 
-    let currWord = "";
-    for(let i = 0; i < 5; i++){
-      currWord += board[currAttempt.attempt][i];
-    }
+    // let currWord = "";
+    // for(let i = 0; i < 5; i++){
+    //   //join 
+    //   currWord += board.join([currAttempt.attempt][i]);
+    // }
+    //better way instead of for loop^
+    const currWord = board[currAttempt.attempt].join("");
 
     if(wordSet.has(currWord.toLowerCase())){
 
       //if 5 letters then move to next attempt and restart letter pos
-      setCurrAttempt({attempt: currAttempt.attempt + 1, letterPos: 0})
+      //callback in useState !!!!
+      setCurrAttempt(prev => ({attempt: prev.attempt + 1, letterPos: 0}))
   
     } else {
       alert("Word Not Found");

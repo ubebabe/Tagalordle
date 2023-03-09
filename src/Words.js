@@ -9,6 +9,9 @@ export const boardDefault = [
     ["", "", "", "", ""],
 ]
 
+//make txt file into array
+//generate rand num to find array index for today's word
+
 export const generateWordSet = async () => {
     let wordSet;
     let todaysWord;
