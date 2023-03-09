@@ -32,22 +32,20 @@ function App() {
       setWordSet(words.wordSet);
       setCorrectWord(words.todaysWord);
 
+      //GET translation from backend
+      const getTranslation = async () => {
+
+        //destructuring !!!!!
+        const {data} = await axios.get('http://localhost:8000/?englishWord=' + words.todaysWord)
+        setTranslation(data.translation);
+     };
       //send today's word to backend
-      getTranslation(words.todaysWord);
+      getTranslation();
     })
+    
+    console.log('i fire once');
 
   }, [])
-
-  //FUNCTIONS TO SET TODAY'S WORD (FRONT/BACK END CONNECTION)
-
-  //query params
-  //GET translation from backend
-  const getTranslation = async (inputtedWord) => {
-
-     //destructuring !!!!!
-     const {data} = await axios.get('http://localhost:8000/?englishWord=' + inputtedWord)
-     setTranslation(data.translation);
-  };
 
 
   const onSelectLetter = (keyVal) => {
