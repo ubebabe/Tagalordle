@@ -14,6 +14,7 @@ function Letter({letterPos, attemptVal}) {
   const correct = correctWord.toUpperCase()[letterPos] === letter;
   const almost = !correct && letter !== "" && correctWord.includes(letter);
 
+  //letterState = determines the color of the board
   const letterState = 
   currAttempt.attempt > attemptVal && 
   (correct ? "correct" : almost ? "almost" : "error");
