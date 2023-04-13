@@ -1,3 +1,7 @@
+// amazing tutorial: https://codelabs.developers.google.com/codelabs/cloud-text-speech-node#0
+//set up environmental variable: https://cloud.google.com/docs/authentication/provide-credentials-adc
+
+
 'use strict';
 
 /**
