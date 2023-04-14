@@ -37,15 +37,15 @@ render() {
 	return (
 	<div>
 		{/* Show state of song on website */}
-		<p>
+		{/* <p>
 		{this.state.isPlaying ?
 			"Song is Playing" :
 			"Song is Paused"}
-		</p>
+		</p> */}
 
 		{/* Button to call our main function */}
 		<button onClick={this.playPause}>
-		Play | Pause
+		playPause
 		</button>
 	</div>
 	);
