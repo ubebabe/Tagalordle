@@ -7,6 +7,9 @@ import GameOver from './components/GameOver';
 import axios from 'axios';
 import Pronunciation from './components/Pronunciation';
 
+//for cookies? 
+import { useCookies } from 'react-cookie';
+
 export const AppContext = createContext();
 
 function App() {
@@ -19,10 +22,15 @@ function App() {
   const [correctWord, setCorrectWord] = useState("")
   const [gameOver, setGameOver] = useState({
     gameOver: false, 
-    guessedWord: false
+    guessedWord: false,
+    currScore: 0
   })
   //translation variables recieved from backend (translation)
   const [translation, setTranslation] = useState("");
+
+  //cookies
+  const [cookies, setCookie] = useCookies(["score"]);
+
 
   //automatically imports the set to anywhere in project
   useEffect(() => {
@@ -96,8 +104,12 @@ function App() {
     } 
 
     if(currWord.toLowerCase() === correctWord){
-      setGameOver({gameOver: true, guessedWord: true});
-      console.log("DONE SON");
+
+      //increase cookie score
+      setCookie("score", (parseInt(cookies.score)) + 1 || 1, { path: '/' });
+
+      setGameOver({gameOver: true, guessedWord: true, currScore: (parseInt(cookies.score))});
+      console.log("in app.js" + parseInt(cookies.score));
       return;
     }
 
@@ -135,6 +147,10 @@ function App() {
         gameOver,
         setTranslation,
         translation,
+        setTranslation,
+        translation,
+        setCookie,
+        cookies
         }}>
         <div className='game'>
           <Board />
