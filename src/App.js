@@ -4,8 +4,8 @@ import Keyboard from './components/Keyboard';
 import { boardDefault, generateWordSet } from './Words';
 import { createContext, useState, useEffect } from 'react'; 
 import GameOver from './components/GameOver';
-// import translateText from './translate-nodejs/main-node';
 import axios from 'axios';
+import Pronunciation from './components/Pronunciation';
 
 export const AppContext = createContext();
 
@@ -117,6 +117,8 @@ function App() {
           {translation}
         </h1>
       </nav>
+
+      <Pronunciation/>
 
       <AppContext.Provider value={{
         board, 
