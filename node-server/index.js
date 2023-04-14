@@ -22,7 +22,7 @@ async function listVoices(languageCode) {
   });
 }
 
-listVoices('en');
+// listVoices('en');
 
 /**
  * Sythesizes sample text into an .mp3 file.
@@ -34,11 +34,11 @@ async function synthesize() {
   
     const client = new textToSpeech.TextToSpeechClient();
   
-    const text = 'This is a demonstration of the Google Cloud Text-to-Speech API';
+    const text = 'putang ina mo';
   
     const request = {
       input: {text: text},
-      voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
+      voice: {languageCode: 'fil-PH', ssmlGender: 'FEMALE'},
       audioConfig: {audioEncoding: 'MP3'},
     };
   
