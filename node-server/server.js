@@ -51,10 +51,10 @@ async function textToSpeech() {
   
     const client = new textToSpeech.TextToSpeechClient();
   
-    const text = 'putang ina mo';
+    // const text = 'putang ina mo';
   
     const request = {
-      input: {text: text},
+      input: {text: currTagWord},
       voice: {languageCode: 'fil-PH', ssmlGender: 'FEMALE'},
       audioConfig: {audioEncoding: 'MP3'},
     };
@@ -63,7 +63,7 @@ async function textToSpeech() {
     // Write the binary audio content to a local file
     const writeFile = util.promisify(fs.writeFile);
     await writeFile('output.mp3', response.audioContent, 'binary');
-    console.log('Audio content written to file: output.mp3');
+    console.log('Audio content written to file: ' + currTagWord);
 }
 
 //------ SERVER
@@ -73,11 +73,10 @@ app.get("/", (req, res) => {
   currEngWord = req.query.englishWord;
   console.log('ENG word: ' + currEngWord);
 
-  textToSpeech();
-
   translateText().then((data) => {
     console.log('TAGALOG word: ' + currTagWord);
     res.json({ translation: currTagWord}); ; // prints 60 after 4 seconds.
+    textToSpeech();
   });;
  
 });
