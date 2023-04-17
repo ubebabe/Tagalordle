@@ -6,7 +6,10 @@ function Letter({letterPos, attemptVal}) {
     board, 
     correctWord, 
     currAttempt, 
-    setDisabledLetters} = useContext(AppContext);
+    setDisabledLetters,
+    setAlmostLetters,
+    setCorrectLetters
+  } = useContext(AppContext);
   const letter = board[attemptVal][letterPos];
 
   //TODO: booleans
@@ -21,11 +24,17 @@ function Letter({letterPos, attemptVal}) {
 
   useEffect(() => {
 
+    //only letters that are wrong
     if((letter !== "" && !correct && !almost)){
-
       // this is an array that holds all letters that are disabled
       // from prev attempts and now
       setDisabledLetters((prev) => [...prev, letter]);
+    } 
+    else if(letter !== "" && almost){
+      setAlmostLetters((prev) => [...prev, letter]);
+    }
+    else if(letter !== "" && correct){
+      setCorrectLetters((prev) => [...prev, letter]);
     }
 
   }, [currAttempt.attempt]);

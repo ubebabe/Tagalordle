@@ -19,6 +19,8 @@ function App() {
   const [currAttempt, setCurrAttempt] = useState({attempt: 0, letterPos: 0})
   const [wordSet, setWordSet] = useState(new Set())
   const [disabledLetters, setDisabledLetters] = useState([]);
+  const [almostLetters, setAlmostLetters] = useState([]);
+  const [correctLetters, setCorrectLetters] = useState([]);
   const [correctWord, setCorrectWord] = useState("")
   const [gameOver, setGameOver] = useState({
     gameOver: false, 
@@ -142,6 +144,10 @@ function App() {
         correctWord,
         setDisabledLetters,
         disabledLetters, 
+        setAlmostLetters,
+        almostLetters,
+        setCorrectLetters,
+        correctLetters,
         setGameOver,
         gameOver,
         setTranslation,
