@@ -14,7 +14,7 @@ function GameOver() {
         </h3>
 
         <h1> 
-            Score: {gameOver.currScore}
+            Score: {gameOver.currScore || 1}
         </h1>
 
         <h1> 

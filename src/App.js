@@ -128,9 +128,8 @@ function App() {
         <h1>
           {translation}
         </h1>
+        <Pronunciation/>
       </nav>
-
-      <Pronunciation/>
 
       <AppContext.Provider value={{
         board, 

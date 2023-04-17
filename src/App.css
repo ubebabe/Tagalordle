@@ -15,6 +15,13 @@ body {
   margin: 0;
 }
 
+.btn{
+  color: #ffffff;
+  background-color: transparent;
+	border-color: transparent;
+  display: flex;
+}
+
 /* top grey line seperating the title */
 nav {
   height: 60px;
@@ -22,7 +29,10 @@ nav {
   margin: 0;
   /* border-bottom: 1px solid rgb(255, 255, 255); */
   display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* place-items: center; */
 }
 
 /* title: tagalordle */
@@ -31,6 +41,7 @@ nav h1 {
   font-family: Helvetica, Arial, sans-serif;
   color: white;
   font-size: 45px;
+  display: flex;
 }
 
 /* actual game board */
@@ -45,8 +56,8 @@ nav h1 {
 
 /* board for squares */
 .board {
-  width: 450px;
-  height: 450px;
+  width: 440px;
+  height: 440px;
   display: flex;
   flex-direction: column;
 }

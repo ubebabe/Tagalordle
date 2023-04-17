@@ -44,9 +44,10 @@ render() {
 		</p> */}
 
 		{/* Button to call our main function */}
-		<button onClick={this.playPause}>
+		<button class="btn" onClick={this.playPause}><i class="fa-solid fa-volume-high"></i></button>
+		{/* <button onClick={this.playPause}>
 		playPause
-		</button>
+		</button> */}
 	</div>
 	);
 }
