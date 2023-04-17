@@ -27,7 +27,7 @@ function GameOver() {
 
         {gameOver.guessedWord && (<h3> You guessed in {currAttempt.attempt} attempts </h3>)}
 
-        <button className="btn" onClick={refreshPage}><i className="fa-solid fa-volume-high"></i></button>
+        <button className="playAgain" onClick={refreshPage}>play again</button>
         </div>
   )
 }
