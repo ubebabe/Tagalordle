@@ -147,3 +147,12 @@ nav h1 {
 #disabled {
   background-color: #3a393c;
 }
+
+.gameOver{
+
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 30px;
+  
+}
